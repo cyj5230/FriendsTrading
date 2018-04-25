@@ -1,7 +1,7 @@
 pragma solidity ^0.4.22;
 contract FriendTrading {
     
-    //event NewCharacter(uint userID,string name,string introduction,uint balance,uint[] slavesID,bool available,uint masterID,uint value);
+    event NewCharacter(address addr,uint balance,bool available,uint masterID,uint value);
     
     struct User{
         address addr;
@@ -18,14 +18,14 @@ contract FriendTrading {
     }
     
 	uint userID = 10000000;
-	mapping(uint => User[]) public users;
+	mapping(uint => User) public users;
 
     uint work_hour = 8;
 	uint public finishtime;
     
     //1. add new user
     function createCharacter(string _name, string _introduction){
-        users[userID++].push(User({
+        users[userID++] = User({
             addr: msg.sender,
             //introduction: _introduction,
             balance: 1000,
@@ -34,8 +34,8 @@ contract FriendTrading {
             available: false,
             masterID: 0, //
             Value: 50
-        }));          
-        //NewCharacter(userID,_name,_introduction,balance,slavesID,available,masterID,value);
+        });          
+        NewCharacter(msg.sender,1000,false,0,50);
     }
     
 	//2. buy friend!
@@ -77,18 +77,18 @@ contract FriendTrading {
    
     function sendToWork(uint _masterID, uint _slaveID){
         require(users[_masterID].addr == msg.sender);
-        require(_slaveID.masterID == _masterID);
-        require(_slaveID.available == true);
+        require(users[_slaveID].masterID == _masterID);
+        require(users[_slaveID].available == true);
         finishtime = now + work_hour * 1 hours;
-        _slaveID.available = false;
+        users[_slaveID].available = false;
     }
     
     function finishwork(uint _masterID, uint _slaveID) public afterworktime payable{
         //uint work_reward = 20;
         require(users[_masterID].addr == msg.sender);
-        require(_slaveID.masterID == _masterID);
-        require(_slaveID.available == false);
-        _slaveID.available = true;
+        require(users[_slaveID].masterID == _masterID);
+        require(users[_slaveID].available == false);
+        users[_slaveID].available = true;
         users[_masterID].addr.transfer(15);
         users[_slaveID].addr.transfer(5);
     }
@@ -102,7 +102,7 @@ contract FriendTrading {
 		require(user_addr == msg.sender);
 		uint slave_M = users[_slaveID].masterID;
 		
-		if (user_addr ==slave_M){
+		if (_userID ==slave_M){
 			users[_slaveID].addr.transfer(reward);
 		}
 		else{
@@ -112,7 +112,7 @@ contract FriendTrading {
 	}
 
      //delete Slave from slave’ former maser’ slavesID
-    function remove(uint[] array,uint _slaveID)  returns(uint[]) {
+    function remove(uint[] storage array,uint _slaveID) internal returns(uint[]) {
         uint index;
         for (uint i =0; i < array.length; i++){
             if(array[i]==_slaveID){
@@ -126,7 +126,7 @@ contract FriendTrading {
             array[j] = array[j+1];
         }
         delete array[array.length-1];
-        array.length--;
+        array.length --;
         return array;
     }
 }
