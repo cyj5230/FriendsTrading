@@ -52,9 +52,9 @@ export default class Header extends Component{
 
             {/*!-- Header Icon -->*/}
             <div className="header-icons">
-              <a href="profile.html" className="header-wrapicon1 dis-block">
+              <Link to="/profile" className="header-wrapicon1 dis-block">
                 <img src="images/icons/icon-header-01.png" className="header-icon1" alt="ICON"/>
-              </a>
+              </Link>
 
               <span className="linedivide1"></span>
 
@@ -135,18 +135,18 @@ export default class Header extends Component{
 
         {/*!-- Header Mobile -->*/}
         <div className="wrap_header_mobile">
-        {/*!-- Logo moblie -->*/}          
-            <a href="index.html" className="logo-mobile">
+        {/*!-- Logo moblie -->*/}
+          <Link to="/" className="logo-mobile">
             <img src="images/icons/FT-logo.png" alt="IMG-LOGO"/>
-          </a>
+          </Link>
 
           {/*!-- Button show menu -->*/}
           <div className="btn-show-menu">
             {/*!-- Header Icon mobile -->*/}
             <div className="header-icons-mobile">
-              <a href="profile.html" className="header-wrapicon1 dis-block">
+              <Link to="/profile" className="header-wrapicon1 dis-block">
                 <img src="images/icons/icon-header-01.png" className="header-icon1" alt="ICON"/>
-              </a>
+              </Link>
 
               <span className="linedivide2"></span>
 
