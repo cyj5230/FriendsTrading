@@ -12,12 +12,12 @@ class App extends Component {
 
     this.state={
       name:'Yuki',
-      id:'004',
+      id:'007',
       introduction:'This is a sample introduction.',
-      price:'$30.00',
-      masterID:'005',
-      slavesID:['001','002','003']      
-      //market, profile, about, login, slave
+      price:30.00,
+      masterID:'008',
+      slavesID:['001','003','004','005','006'],      
+      marketSlaves:['001','002','003','004','005','006','007','008','009']
     };
   }
 
@@ -62,10 +62,19 @@ class App extends Component {
         <section className="bgwhite p-t-55 p-b-65">
           <div className="container">
               <Switch>
-                <Route path='/' component={Market} exact={true}/>              
+                <Route path='/' 
+                 render={()=>
+                    <Market 
+                    id={this.state.id}
+                    slavesID={this.state.slavesID}
+                    masterID={this.state.masterID}
+                    marketSlaves={this.state.marketSlaves}
+                    />}
+                  exact={true}/>              
                 <Route path='/profile' 
                   render={()=>
                     <Profile 
+                    id={this.state.id}
                     name={this.state.name} 
                     slavesID={this.state.slavesID}
                     masterID={this.state.masterID}
@@ -89,7 +98,12 @@ class Market extends Component{
     return(
       <div className="row">            
         <Leftbar />
-        <MarketDisplay />            
+        <MarketDisplay 
+          id={this.props.id}
+          slavesID={this.props.slavesID}
+          masterID={this.props.masterID}
+          marketSlaves={this.props.marketSlaves}
+        />            
       </div>
     );
   }
@@ -101,6 +115,7 @@ class Profile extends Component{
       <div className="row">            
         <Leftbar />
         <ProfileDisplay 
+          id={this.props.id}
           name={this.props.name} 
           slavesID={this.props.slavesID}
           masterID={this.props.masterID}

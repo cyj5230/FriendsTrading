@@ -1,6 +1,35 @@
 import React, { Component } from 'react';
+import MarketItem from './MarketItem';
 
 export default class MarketDisplay extends Component{
+  constructor(props){
+    super(props); 
+    this.handleLabel();
+  }
+
+  handleLabel(){
+    let length = this.props.marketSlaves.length;
+    this.label = [];
+
+    for(let i = 0; i < length; i++){
+      this.label.push('init');
+    }
+
+    for(let i = 0; i < length; i++){
+      if(this.props.marketSlaves[i] == this.props.id)
+        this.label[i] = 'you';
+      else if(this.props.marketSlaves[i] == this.props.masterID)
+        this.label[i] = 'master';
+      else{
+        for(let j = 0; j < this.props.slavesID.length; j++){
+          if(this.props.marketSlaves[i] == this.props.slavesID[j])
+            this.label[i] = 'slave';
+        }
+      }
+    }
+    console.log(this.label);
+  }
+
   render(){
     return(
       <div className="col-sm-6 col-md-8 col-lg-9 p-b-50">
@@ -17,77 +46,15 @@ export default class MarketDisplay extends Component{
           </div>
 
           <span className="s-text8 p-t-5 p-b-5">
-            Showing 1–12 of 16 results
+            Showing 1–9 of {this.props.marketSlaves.length} results
           </span>
         </div>
 
         {/*<!-- Product -->*/}
         <div className="row">
-          <div className="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            {/*<!-- Block2 -->*/}
-            <div className="block2">
-              <div className="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                <img src="images/item-cart-01.jpg" alt="IMG-PRODUCT"/>
-
-                <div className="block2-overlay trans-0-4">
-                  <a href="#" className="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i className="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i className="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div className="block2-btn-addcart w-size1 trans-0-4">
-                    {/*<!-- Button -->*/}
-                    <button className="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="block2-txt p-t-20">
-                <a href="product-detail.html" className="block2-name dis-block s-text3 p-b-5">
-                  Username
-                </a>
-
-                <span className="block2-price m-text6 p-r-5">
-                  $7.00
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            {/*<!-- Block2 -->*/}
-            <div className="block2">
-              <div className="block2-img wrap-pic-w of-hidden pos-relative">
-                <img src="images/item-cart-02.jpg" alt="IMG-PRODUCT"/>
-
-                <div className="block2-overlay trans-0-4">
-                  <a href="#" className="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i className="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i className="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div className="block2-btn-addcart w-size1 trans-0-4">
-                    {/*<!-- Button -->*/}
-                    <button className="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="block2-txt p-t-20">
-                <a href="product-detail.html" className="block2-name dis-block s-text3 p-b-5">
-                  Username
-                </a>
-
-                <span className="block2-price m-text6 p-r-5">
-                  $9.50
-                </span>
-              </div>
-            </div>
-          </div>              
+          {
+            this.props.marketSlaves.map((slave, index)=><MarketItem key={slave} label={this.label[index]} id={slave} name={'TestUser'+slave} price={15.90}/>)
+          }          
         </div>
 
         {/*<!-- Pagination -->*/}

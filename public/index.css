@@ -1088,6 +1088,10 @@ li.sale-noti > a {
   background-color: #e65540;
 }
 
+.item-menu-mobile a {
+  color: white;
+}
+
 .side-menu .main-menu > li > button {
   padding-left: 20px;
   font-family: Montserrat-Regular;
@@ -1666,7 +1670,10 @@ li.sale-noti > a {
 ///////////////////////////////////////////////////////////
 */
 .block2-labelsale::before,
-.block2-labelnew::before 
+.block2-labelnew::before,
+.block2-labelowned::before,
+.block2-labelmaster::before,
+.block2-labelyou::before
 {
   z-index: 100;
   font-family: Montserrat-Regular;
@@ -1679,7 +1686,7 @@ li.sale-noti > a {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
+  width: 80px;
   height: 22px;
   border-radius: 11px;
   position: absolute;
@@ -1695,6 +1702,21 @@ li.sale-noti > a {
 .block2-labelnew::before {
   background-color: #66a8a6;
   content: 'New';
+}
+
+.block2-labelowned::before {
+  background-color: #66a8a6;
+  content: 'Your Slave';
+}
+
+.block2-labelmaster::before {
+  background-color: #e65540;
+  content: 'Your Master';
+}
+
+.block2-labelyou::before {
+  background-color: #ffa037;
+  content: 'You';
 }
 
 /* ------------------------------------ */

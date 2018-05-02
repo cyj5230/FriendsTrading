@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Link} from 'react-router-dom';
+import SlaveItemMini from './SlaveItemMini';
 
 export default class Header extends Component{
   constructor(props){
     super(props);
     //this.changePage = this.changePage.bind(this);
   }
-
-  // changePage(page){
-
-  // }
 
   render(){
     return(
@@ -20,7 +17,7 @@ export default class Header extends Component{
 
             <div className="topbar-child2">
               <span className="topbar-email">
-                Welcome, {this.props.name}! Your price is {this.props.price}
+                Welcome, {this.props.name}! Your price is ${this.props.price}
               </span>
             </div>
           </div>
@@ -65,66 +62,13 @@ export default class Header extends Component{
                 {/*!-- Header cart noti -->*/}
                 <div className="header-cart header-dropdown">
                   <ul className="header-cart-wrapitem">
-                    <li className="header-cart-item">
-                      <div className="header-cart-item-img">
-                        <img src="images/item-cart-01.jpg" alt="IMG"/>
-                      </div>
-
-                      <div className="header-cart-item-txt">
-                        <a href="#" className="header-cart-item-name">
-                          CHEN Yuji
-                        </a>
-
-                        <span className="header-cart-item-info">
-                          $19.00
-                        </span>
-                      </div>
-                    </li>
-
-                    <li className="header-cart-item">
-                      <div className="header-cart-item-img">
-                        <img src="images/item-cart-02.jpg" alt="IMG"/>
-                      </div>
-
-                      <div className="header-cart-item-txt">
-                        <a href="#" className="header-cart-item-name">
-                          DAI Na
-                        </a>
-
-                        <span className="header-cart-item-info">
-                          $27.00
-                        </span>
-                      </div>
-                    </li>
-
-                    <li className="header-cart-item">
-                      <div className="header-cart-item-img">
-                        <img src="images/item-cart-01.jpg" alt="IMG"/>
-                      </div>
-
-                      <div className="header-cart-item-txt">
-                        <a href="#" className="header-cart-item-name">
-                          LIN Yuwei
-                        </a>
-
-                        <span className="header-cart-item-info">
-                          $32.00
-                        </span>
-                      </div>
-                    </li>
+                    {
+                      this.props.slavesID.map((slave)=><SlaveItemMini key={slave} id={slave} name={'TestUser'+slave} price={15.90}/>)
+                    }
                   </ul>
 
                   <div className="header-cart-total">
-                    Total: $78.00
-                  </div>
-
-                  <div className="header-cart-buttons">
-                    <div className="header-cart-wrapbtn">
-                      {/*!-- Button -->*/}
-                      <a href="cart.html" className="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                        My Slaves
-                      </a>
-                    </div>
+                    Total: {this.props.slavesID.length} Slaves
                   </div>
 
                 </div>
@@ -157,69 +101,16 @@ export default class Header extends Component{
                 {/*!-- Header cart noti -->*/}
                 <div className="header-cart header-dropdown">
                   <ul className="header-cart-wrapitem">
-                    <li className="header-cart-item">
-                      <div className="header-cart-item-img">
-                        <img src="images/item-cart-01.jpg" alt="IMG"/>
-                      </div>
-
-                      <div className="header-cart-item-txt">
-                        <a href="#" className="header-cart-item-name">
-                          CHEN Yuji
-                        </a>
-
-                        <span className="header-cart-item-info">
-                          $19.00
-                        </span>
-                      </div>
-                    </li>
-
-                    <li className="header-cart-item">
-                      <div className="header-cart-item-img">
-                        <img src="images/item-cart-02.jpg" alt="IMG"/>
-                      </div>
-
-                      <div className="header-cart-item-txt">
-                        <a href="#" className="header-cart-item-name">
-                          DAI Na
-                        </a>
-
-                        <span className="header-cart-item-info">
-                          $27.00
-                        </span>
-                      </div>
-                    </li>
-
-                    <li className="header-cart-item">
-                      <div className="header-cart-item-img">
-                        <img src="images/item-cart-01.jpg" alt="IMG"/>
-                      </div>
-
-                      <div className="header-cart-item-txt">
-                        <a href="#" className="header-cart-item-name">
-                          LIN Yuwei
-                        </a>
-
-                        <span className="header-cart-item-info">
-                          $32.00
-                        </span>
-                      </div>
-                    </li>
+                    {
+                      this.props.slavesID.map((slave)=><SlaveItemMini key={slave} id={slave} name={'TestUser'+slave} price={15.90}/>)
+                    }
                   </ul>
 
                   <div className="header-cart-total">
-                    Total: $78.00
+                    Total: {this.props.slavesID.length} Slaves
                   </div>
 
-                  <div className="header-cart-buttons">
-                    <div className="header-cart-wrapbtn">
-                      {/*!-- Button -->*/}
-                      <a href="cart.html" className="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                        My Slaves
-                      </a>
-                    </div>
-                  </div>
-
-                </div>
+                 </div>
               </div>
             </div>
 
@@ -240,22 +131,28 @@ export default class Header extends Component{
               <li className="item-topbar-mobile p-l-20 p-t-8 p-b-8">
                 <div className="topbar-child2-mobile">
                   <span className="topbar-email">
-                    Welcome, {this.props.name}! Your price is {this.props.price}
+                    Welcome, {this.props.name}! Your price is ${this.props.price}
                   </span>
 
                 </div>
               </li>
 
               <li className="item-menu-mobile">
-                <button>Market</button>
+                <button>
+                  <Link to="/">Market</Link> 
+                </button>                 
               </li>
 
               <li className="item-menu-mobile">
-                <button>Profile</button>
+                <button>
+                  <Link to="/profile">Profile</Link> 
+                </button>
               </li>
 
               <li className="item-menu-mobile">
-                <button>About</button>
+                <button>
+                  <Link to="/about">About</Link> 
+                </button>
               </li>
             </ul>
           </nav>
