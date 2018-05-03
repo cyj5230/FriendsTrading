@@ -26,7 +26,7 @@ let account_three = web3.eth.accounts[2];
 ftContract.createCharacter({from: account_one});
 
 // 5.2 add buy_friend
-ftContract.buyFriend.sendTransaction(account_two,{from: account_one});
+ftContract.buyFriend(account_two,{from: account_one});
 
 // 5.3 senttoWork
 ftContract.sendToWork(account_two,{from: account_one});
