@@ -162,8 +162,8 @@ contract FriendTrading {
 
 
      //5. get information of users(id ,  balance, matserID, []slavesID, available)
-    function GetUser()  public returns(uint id, uint balance, uint value,uint masterID, uint[] slavesID, bool available){
-        address ad =msg.sender;
+    function GetUser(address ad)  public returns(uint id, uint balance, uint value,uint masterID, uint[] slavesID, bool available){
+        //address ad =msg.sender;
         id = addrs[ad];
         require(users[id].addr == ad);
         balance = users[id].balance;
