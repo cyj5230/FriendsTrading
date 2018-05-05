@@ -63,7 +63,7 @@ function reward(addr,user){
 }
 
 // 5.6 hash
-usernameInfo = {id: ;name: ;Introduciton: ;};
+//usernameInfo = {id: ;name: ;Introduciton: ;};
 function saveHash(usernameInfo){
 	ipfs.addJSON(usernameInfo, (err, hash) => {
 		if (err) {
@@ -80,7 +80,7 @@ function getData(hash){
 			return console.log(err);
 		} 
 		console.log(“DATA:”, data);
-		return hash;
+		return data;
 	});
 }
 
