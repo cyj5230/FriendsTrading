@@ -35,7 +35,7 @@ contract FriendTrading {
             available: false,
             masterID: 0, //
             Value: 50,
-			ipfshash: hash
+	    	ipfshash: hash
         });
         
         //NewCharacter(msg.sender,1000,false,0,50);
@@ -174,8 +174,8 @@ contract FriendTrading {
         slavesID = users[id].slavesID;
         available = users[id].available;
     }
-
-	function GetoneHash(address ad) public returns(string hash) {
+    
+    function GetoneHash(address ad) public returns(string hash) {
 		id = addrs[ad];
 		require(users[id].addr == ad);
 		hash = users[id].ipfshash;
