@@ -89,7 +89,9 @@ function get_user(addr){
 	let hash = ftContract.GetoneHash.call(addr);
 	soli_Info = JSON.stringify(result_1);
 	ipfs_Intro = getData(hash);
-	userInfo = [soli_Info,ipfs_Intro];
+	//var obj = Object.assign(o1, o2, o3);
+	//userInfo = [soli_Info,ipfs_Intro];
+	userInfo = $.extend({},soli_Info, ipfs_Intro);
 	if (jQuery.isEmptyObject(userInfo)){
 		return false;
 	}
