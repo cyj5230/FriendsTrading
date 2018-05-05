@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import SlaveItem from './SlaveItem';
 
+declare var Pictogrify;
+
 export default class ProfileDisplay extends Component{
+  componentDidMount () {
+  	document.querySelector('.my-avatar').src = new Pictogrify(this.props.address, 'monsters').base64;
+  }
   render(){
     return(
     <div className="col-sm-6 col-md-8 col-lg-9 p-b-30">
@@ -13,17 +18,21 @@ export default class ProfileDisplay extends Component{
 			<div className="row">
 				<div className="col-md-4 p-b-30">
 					<div className="hov-img-zoom">
-						<img src="images/item-01.jpg" alt="IMG-ABOUT"/>
+						<img className="my-avatar" alt=""/>
 					</div>
 				</div>
 
 				<div className="col-md-8 p-b-30">
+					<p className="m-text21">
+						{this.props.address}
+					</p>
 					<h3 className="m-text24">
 						#{this.props.id}
 					</h3>
 					<h3 className="m-text26 p-b-16">
 						{this.props.name}
 					</h3>
+					
 					<p className="m-text21 p-t-15">
 						Price: ${this.props.price}
 					</p>
@@ -41,7 +50,7 @@ export default class ProfileDisplay extends Component{
 
       {/*/*<!-- My Slaves -->*/}
 		<section className="relateproduct bgwhite p-t-45 p-b-138">
-			<div class="container">
+			<div className="container">
 				<div className="sec-title p-b-60">
 					<h3 className="m-text5 t-center">
 						My Slaves

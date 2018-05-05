@@ -5,15 +5,19 @@ import Leftbar from './components/Leftbar';
 import MarketDisplay from './components/MarketDisplay';
 import About from './components/About';
 import ProfileDisplay from './components/ProfileDisplay';
+import Setting from './components/Setting';
+import test from './test.json';
+import me from './me.json';
 
 class App extends Component {
+  
   constructor(props){
     super(props);
-
     this.state={
       name:'Yuki',
+      address:'0xBD9320e707394E65e2B34A3d1Bef6817737b63a5',
       id:'007',
-      introduction:'This is a sample introduction.',
+      introduction:'',
       price:30.00,
       masterID:'008',
       slavesID:['001','003','004','005','006'],      
@@ -75,11 +79,18 @@ class App extends Component {
                   render={()=>
                     <Profile 
                     id={this.state.id}
-                    name={this.state.name} 
+                    name={this.state.name}
+                    address={this.state.address} 
                     slavesID={this.state.slavesID}
                     masterID={this.state.masterID}
                     introduction={this.state.introduction}
                     price={this.state.price}
+                    />}
+                />    
+                <Route path='/setting' 
+                  render={()=>
+                    <Setting 
+                    address={this.state.address}
                     />}
                 />           
                 <Route path='/about' component={About}/>
@@ -117,6 +128,7 @@ class Profile extends Component{
         <ProfileDisplay 
           id={this.props.id}
           name={this.props.name} 
+          address={this.props.address}
           slavesID={this.props.slavesID}
           masterID={this.props.masterID}
           introduction={this.props.introduction}

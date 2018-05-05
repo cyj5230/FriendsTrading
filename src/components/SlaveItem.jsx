@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
 
+declare var Pictogrify;
+
 export default class SlaveItem extends Component{
+	constructor(props){
+		super(props);
+		this.avatar = null;
+
+		this.setAvatarRef = element =>{
+			this.avatar = element;
+		}
+	}
+	componentDidMount (props) {
+  		this.avatar.src = new Pictogrify(this.props.name, 'monsters').base64;
+  	}
 	render(){
 		return(
 			<div className="item-slick2 p-l-15 p-r-15">
 				{/*<!-- Block2 -->*/}
 				<div className="block2">
 					<div className="block2-img wrap-pic-w of-hidden pos-relative">
-						<img src="images/item-02.jpg" alt="IMG-PRODUCT"/>
+						<img ref={this.setAvatarRef} alt=""/>
 					</div>
 
 					<div className="block2-txt p-t-20">

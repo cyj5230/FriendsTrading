@@ -1,23 +1,32 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Link} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import SlaveItemMini from './SlaveItemMini';
 
 export default class Header extends Component{
   constructor(props){
     super(props);
-    //this.changePage = this.changePage.bind(this);
+    this.checkInfo = this.checkInfo.bind(this);
+    this.validUser = false;
+  }
+
+  checkInfo(){
+    if(this.props.id !== "")
+      this.validUser = true;
+    else
+      this.validUser = false;
   }
 
   render(){
+    this.checkInfo();
     return(
       <header className="header1">
         {/*Header desktop -->*/}
         <div className="container-menu-header">
           <div className="topbar">
-
             <div className="topbar-child2">
               <span className="topbar-email">
-                Welcome, {this.props.name}! Your price is ${this.props.price}
+                {this.validUser && <div>Welcome, {this.props.name} ! Your price is ${this.props.price}</div>}
+                {!this.validUser && <div>Log on to enjoy FriendsTrading!</div>}
               </span>
             </div>
           </div>
@@ -36,9 +45,17 @@ export default class Header extends Component{
                   <Link to="/">Market</Link>                  
                   </li>
 
-                  <li>
-                   <Link to="/profile">Profile</Link>
-                  </li>
+                  {this.validUser && 
+                    <li>
+                     <Link to="/profile">Profile</Link>
+                    </li>
+                  }
+                  
+                  {!this.validUser && 
+                    <li>
+                     <Link to="/setting">Log On</Link>
+                    </li>
+                  }
 
                   <li>
                     <Link to="/about">About</Link>
@@ -49,7 +66,7 @@ export default class Header extends Component{
 
             {/*!-- Header Icon -->*/}
             <div className="header-icons">
-              <Link to="/profile" className="header-wrapicon1 dis-block">
+              <Link to={this.validUser ? "/profile":"/setting"} className="header-wrapicon1 dis-block">
                 <img src="images/icons/icon-header-01.png" className="header-icon1" alt="ICON"/>
               </Link>
 
@@ -88,7 +105,7 @@ export default class Header extends Component{
           <div className="btn-show-menu">
             {/*!-- Header Icon mobile -->*/}
             <div className="header-icons-mobile">
-              <Link to="/profile" className="header-wrapicon1 dis-block">
+              <Link to={this.validUser ? "/profile":"/setting"} className="header-wrapicon1 dis-block">
                 <img src="images/icons/icon-header-01.png" className="header-icon1" alt="ICON"/>
               </Link>
 
@@ -130,9 +147,10 @@ export default class Header extends Component{
 
               <li className="item-topbar-mobile p-l-20 p-t-8 p-b-8">
                 <div className="topbar-child2-mobile">
-                  <span className="topbar-email">
-                    Welcome, {this.props.name}! Your price is ${this.props.price}
-                  </span>
+                 <span className="topbar-email">
+                  {this.validUser && <div>Welcome, {this.props.name} ! Your price is ${this.props.price}</div>}
+                  {!this.validUser && <div>Log on to enjoy FriendsTrading!</div>}
+                </span>
 
                 </div>
               </li>
@@ -143,11 +161,21 @@ export default class Header extends Component{
                 </button>                 
               </li>
 
-              <li className="item-menu-mobile">
+             {this.validUser && 
+                <li className="item-menu-mobile">
                 <button>
-                  <Link to="/profile">Profile</Link> 
+                 <Link to="/profile">Profile</Link>
                 </button>
+                </li>
+              }
+            
+            {!this.validUser && 
+              <li className="item-menu-mobile">
+               <button>
+                 <Link to="/setting">Log On</Link>
+               </button>               
               </li>
+            }
 
               <li className="item-menu-mobile">
                 <button>

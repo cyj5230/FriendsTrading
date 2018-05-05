@@ -16,13 +16,13 @@ export default class MarketDisplay extends Component{
     }
 
     for(let i = 0; i < length; i++){
-      if(this.props.marketSlaves[i] == this.props.id)
+      if(this.props.marketSlaves[i] === this.props.id)
         this.label[i] = 'you';
-      else if(this.props.marketSlaves[i] == this.props.masterID)
+      else if(this.props.marketSlaves[i] === this.props.masterID)
         this.label[i] = 'master';
       else{
         for(let j = 0; j < this.props.slavesID.length; j++){
-          if(this.props.marketSlaves[i] == this.props.slavesID[j])
+          if(this.props.marketSlaves[i] === this.props.slavesID[j])
             this.label[i] = 'slave';
         }
       }

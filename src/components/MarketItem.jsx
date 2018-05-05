@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
 
+declare var Pictogrify;
+
 export default class MarketItem extends Component{	
+	constructor(props){
+		super(props);
+		this.avatar = null;
+
+		this.setAvatarRef = element =>{
+			this.avatar = element;
+		}
+	}
+	componentDidMount (props) {
+  		this.avatar.src = new Pictogrify(this.props.name, 'monsters').base64;
+  	}
 
 	render(){
 		let labelType = '';
@@ -25,7 +38,7 @@ export default class MarketItem extends Component{
             {/*<!-- Block2 -->*/}
 	            <div className="block2">
 		            <div className={labelType}>
-		              <img src="images/item-cart-01.jpg" alt="IMG-PRODUCT"/>
+		              <img className="avatar" ref={this.setAvatarRef} />
 		            </div>
 
 		            <div className="block2-txt p-t-20">
