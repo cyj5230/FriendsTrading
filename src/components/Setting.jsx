@@ -5,11 +5,28 @@ declare var Pictogrify;
 export default class Setting extends Component{
   constructor(props){
   	super(props);
+  	this.onFormSubmit = this.onFormSubmit.bind(this);
+  	this.state = {
+			error: undefined
+		};
   }
   componentDidMount () {
   	document.querySelector('.avatar').src = new Pictogrify('0xBD9320e707394E65e2B34A3d1Bef6817737b63a5', 'monsters').base64;
   }
 
+  onFormSubmit(e){
+  	e.preventDefault();
+
+	const name = e.target.elements.name.value.trim();
+	const introduction = e.target.elements.introduction.value.trim();
+	const error = this.props.handleSetting(name, introduction);
+
+	this.setState(() => {
+		return{ error };
+	});
+
+	e.target.elements.option.value = '';
+  }
   render(){
     return(
     	<div>
@@ -25,7 +42,7 @@ export default class Setting extends Component{
 				</div>
 		      	
 
-				<form>
+				<form onSubmit={this.onFormSubmit}>
 					<h4 className="s-text12 p-b-5 p-t-20">
 						Nickname
 					</h4>
@@ -40,6 +57,7 @@ export default class Setting extends Component{
 					<div className="effect1 w-size9">
 						<input className="s-text7 w-full p-b-5" type="text" name="introduction" placeholder="tell us about yourself..."/>
 						<span className="effect1-line"></span>
+						{this.state.error && <p>{this.state.error}</p>}
 					</div>
 
 					<div className="w-size2 p-t-20 m-l-r-auto">

@@ -13,6 +13,7 @@ class App extends Component {
   
   constructor(props){
     super(props);
+    this.handleSetting = this.handleSetting.bind(this);
     this.state={
       name:'Yuki',
       address:'0xBD9320e707394E65e2B34A3d1Bef6817737b63a5',
@@ -38,6 +39,17 @@ class App extends Component {
 
       document.body.appendChild(script0);
       document.body.appendChild(script1);
+  }
+  handleSetting(name, intro){
+    if(!name || !intro){
+      return 'Enter valid value';
+    }
+    this.setState(() => {
+      return{
+        name:name,
+        introduction:intro
+      };
+    });
   }
 
   render() {
@@ -91,6 +103,7 @@ class App extends Component {
                   render={()=>
                     <Setting 
                     address={this.state.address}
+                    handleSetting={this.state.handleSetting}
                     />}
                 />           
                 <Route path='/about' component={About}/>
