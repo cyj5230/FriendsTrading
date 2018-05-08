@@ -12,7 +12,7 @@ export default class SlaveItemMini extends Component{
     }
   }
   componentDidMount (props) {
-      this.avatar.src = new Pictogrify(this.props.name, 'monsters').base64;
+      this.avatar.src = new Pictogrify(this.props.address, 'monsters').base64;
     }
 	render(){
 		return(

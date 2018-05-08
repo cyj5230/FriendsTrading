@@ -905,7 +905,7 @@ li.sale-noti > a {
   width: 100%;
 }
 
-.header-cart-item-img::after {
+/*.header-cart-item-img::after {
   content: '\e870';
   font-family: Linearicons;
   font-size: 16px;
@@ -933,7 +933,7 @@ li.sale-noti > a {
 .header-cart-item-img:hover:after {
   cursor: pointer;
   opacity: 1;
-}
+}*/
 
 /* ------------------------------------ */
 .header-cart-item-txt {

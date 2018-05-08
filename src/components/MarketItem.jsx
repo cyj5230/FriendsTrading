@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
-
+import { Redirect} from 'react-router-dom';
 declare var Pictogrify;
 
 export default class MarketItem extends Component{	
 	constructor(props){
 		super(props);
 		this.avatar = null;
+		this.clicked = false;
 
 		this.setAvatarRef = element =>{
 			this.avatar = element;
 		}
+		this.handleClick = this.handleClick.bind(this);
+		this.state = {
+			redirect: false
+		};
 	}
 	componentDidMount (props) {
-  		this.avatar.src = new Pictogrify(this.props.name, 'monsters').base64;
+  		this.avatar.src = new Pictogrify(this.props.address, 'monsters').base64;
   	}
+
+  	handleClick(e){
+  		console.log('clicked');
+  		e.preventDefault();
+		const path = this.props.handleFocus(this.props.id);
+
+		this.setState(() => {
+			return{path:path, redirect:true };
+		});
+	}
 
 	render(){
 		let labelType = '';
@@ -35,9 +50,11 @@ export default class MarketItem extends Component{
 		}
 		return(
 			<div className="col-sm-12 col-md-6 col-lg-4 p-b-50">
+			{this.state.redirect && <Redirect to={this.state.path} />}
             {/*<!-- Block2 -->*/}
-	            <div className="block2">
-		            <div className={labelType}>
+	            <div className="block2" onClick={this.handleClick}>
+	            	
+		            <div className={`hov-img-zoom ${labelType}`}>
 		              <img className="avatar" ref={this.setAvatarRef} />
 		            </div>
 

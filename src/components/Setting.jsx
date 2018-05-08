@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect} from 'react-router-dom';
 
 declare var Pictogrify;
 
@@ -7,11 +8,12 @@ export default class Setting extends Component{
   	super(props);
   	this.onFormSubmit = this.onFormSubmit.bind(this);
   	this.state = {
-			error: undefined
+			error: undefined,
+			redirect: false
 		};
   }
   componentDidMount () {
-  	document.querySelector('.avatar').src = new Pictogrify('0xBD9320e707394E65e2B34A3d1Bef6817737b63a5', 'monsters').base64;
+  	document.querySelector('.user-avatar').src = new Pictogrify(this.props.address, 'monsters').base64;
   }
 
   onFormSubmit(e){
@@ -25,14 +27,23 @@ export default class Setting extends Component{
 		return{ error };
 	});
 
-	e.target.elements.option.value = '';
+	if(error === undefined || error === null){
+		this.setState(() => {
+			return{redirect:true};
+		});
+	}
+
+	e.target.elements.name.value = '';
+	e.target.elements.introduction.value = '';
   }
+
   render(){
     return(
     	<div>
+    		{this.state.redirect && <Redirect to="/my-profile" />}
 	    	<h1>Setting</h1>
 	    	<div className="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-l-r-auto p-lr-15-sm">
-	      		<img className="avatar"/>
+	      		<img className="user-avatar"/>
 
 	      		<h4 className="s-text12 p-b-5 p-t-20">
 					Wallet Address
@@ -57,7 +68,6 @@ export default class Setting extends Component{
 					<div className="effect1 w-size9">
 						<input className="s-text7 w-full p-b-5" type="text" name="introduction" placeholder="tell us about yourself..."/>
 						<span className="effect1-line"></span>
-						{this.state.error && <p>{this.state.error}</p>}
 					</div>
 
 					<div className="w-size2 p-t-20 m-l-r-auto">
@@ -65,6 +75,9 @@ export default class Setting extends Component{
 						<button className="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
 							Join
 						</button>
+						{
+							this.state.error && <p>{this.state.error}</p>
+						}
 					</div>
 				</form>
 			</div>

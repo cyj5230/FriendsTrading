@@ -6,18 +6,28 @@ export default class Header extends Component{
   constructor(props){
     super(props);
     this.checkInfo = this.checkInfo.bind(this);
-    this.validUser = false;
+    this.handleSlaves = this.handleSlaves.bind(this);
   }
 
   checkInfo(){
     if(this.props.id !== "")
-      this.validUser = true;
+      return true;
     else
-      this.validUser = false;
+      return false;
+  }
+
+  handleSlaves(){
+      this.slaves = [];
+
+      for(let i = 0; i < this.props.allUsers.length; i++){
+        for(let j = 0; j < this.props.slavesID.length; j++){
+          if(this.props.allUsers[i]['id'] === this.props.slavesID[j])
+                this.slaves.push(this.props.allUsers[i]);
+          }
+      }
   }
 
   render(){
-    this.checkInfo();
     return(
       <header className="header1">
         {/*Header desktop -->*/}
@@ -25,17 +35,17 @@ export default class Header extends Component{
           <div className="topbar">
             <div className="topbar-child2">
               <span className="topbar-email">
-                {this.validUser && <div>Welcome, {this.props.name} ! Your price is ${this.props.price}</div>}
-                {!this.validUser && <div>Log on to enjoy FriendsTrading!</div>}
+                {this.checkInfo() && <div>Welcome, {this.props.name} ! Your price is ${this.props.price}</div>}
+                {!this.checkInfo() && <div>Log on to enjoy FriendsTrading!</div>}
               </span>
             </div>
           </div>
 
           <div className="wrap_header">
             {/*//!-- Logo -->*/}
-            <a href="index.html" className="logo">
+            <Link to="/" className="logo">
               <img src="images/icons/FT-logo.png" alt="IMG-LOGO"/>
-            </a>
+            </Link>
 
             {/*!-- Menu -->*/}
             <div className="wrap_menu">
@@ -45,13 +55,13 @@ export default class Header extends Component{
                   <Link to="/">Market</Link>                  
                   </li>
 
-                  {this.validUser && 
+                  {this.checkInfo() && 
                     <li>
-                     <Link to="/profile">Profile</Link>
+                     <Link to="/my-profile">Profile</Link>
                     </li>
                   }
                   
-                  {!this.validUser && 
+                  {!this.checkInfo() && 
                     <li>
                      <Link to="/setting">Log On</Link>
                     </li>
@@ -66,26 +76,26 @@ export default class Header extends Component{
 
             {/*!-- Header Icon -->*/}
             <div className="header-icons">
-              <Link to={this.validUser ? "/profile":"/setting"} className="header-wrapicon1 dis-block">
-                <img src="images/icons/icon-header-01.png" className="header-icon1" alt="ICON"/>
+              <Link to={this.checkInfo() ? "/my-profile":"/setting"} className="header-wrapicon1 dis-block">
+                <img src="images/icons/icon-header-01.png" className="header-icon1 h-avatar" alt="ICON"/>
               </Link>
 
               <span className="linedivide1"></span>
-
+              {this.handleSlaves()}
               <div className="header-wrapicon2">
                 <img src="images/icons/icon-header-02.png" className="header-icon1 js-show-header-dropdown" alt="ICON"/>
-                <span className="header-icons-noti">{this.props.slavesID.length}</span>
+                <span className="header-icons-noti">{this.slaves.length}</span>
 
                 {/*!-- Header cart noti -->*/}
                 <div className="header-cart header-dropdown">
                   <ul className="header-cart-wrapitem">
                     {
-                      this.props.slavesID.map((slave)=><SlaveItemMini key={slave} id={slave} name={'TestUser'+slave} price={15.90}/>)
+                      this.slaves.map((slave)=><SlaveItemMini key={`h-slave-${slave['id']}`} id={slave['id']} address={slave['address']} name={slave['name']} price={slave['price']}/>)
                     }
                   </ul>
 
                   <div className="header-cart-total">
-                    Total: {this.props.slavesID.length} Slaves
+                    Total: {this.slaves.length} Slaves
                   </div>
 
                 </div>
@@ -105,7 +115,7 @@ export default class Header extends Component{
           <div className="btn-show-menu">
             {/*!-- Header Icon mobile -->*/}
             <div className="header-icons-mobile">
-              <Link to={this.validUser ? "/profile":"/setting"} className="header-wrapicon1 dis-block">
+              <Link to={this.checkInfo() ? "/my-profile":"/setting"} className="header-wrapicon1 dis-block">
                 <img src="images/icons/icon-header-01.png" className="header-icon1" alt="ICON"/>
               </Link>
 
@@ -113,18 +123,18 @@ export default class Header extends Component{
 
               <div className="header-wrapicon2">
                 <img src="images/icons/icon-header-02.png" className="header-icon1 js-show-header-dropdown" alt="ICON"/>
-                <span className="header-icons-noti">{this.props.slavesID.length}</span>
+                <span className="header-icons-noti">{this.slaves.length}</span>
 
                 {/*!-- Header cart noti -->*/}
                 <div className="header-cart header-dropdown">
                   <ul className="header-cart-wrapitem">
                     {
-                      this.props.slavesID.map((slave)=><SlaveItemMini key={slave} id={slave} name={'TestUser'+slave} price={15.90}/>)
+                      this.slaves.map((slave)=><SlaveItemMini key={`h-slave-${slave['id']}`} id={slave['id']} address={slave['address']} name={slave['name']} price={slave['price']}/>)
                     }
                   </ul>
 
                   <div className="header-cart-total">
-                    Total: {this.props.slavesID.length} Slaves
+                    Total: {this.slaves.length} Slaves
                   </div>
 
                  </div>
@@ -148,8 +158,8 @@ export default class Header extends Component{
               <li className="item-topbar-mobile p-l-20 p-t-8 p-b-8">
                 <div className="topbar-child2-mobile">
                  <span className="topbar-email">
-                  {this.validUser && <div>Welcome, {this.props.name} ! Your price is ${this.props.price}</div>}
-                  {!this.validUser && <div>Log on to enjoy FriendsTrading!</div>}
+                  {this.checkInfo() && <div>Welcome, {this.props.name} ! Your price is ${this.props.price}</div>}
+                  {!this.checkInfo() && <div>Log on to enjoy FriendsTrading!</div>}
                 </span>
 
                 </div>
@@ -161,15 +171,15 @@ export default class Header extends Component{
                 </button>                 
               </li>
 
-             {this.validUser && 
+             {this.checkInfo() && 
                 <li className="item-menu-mobile">
                 <button>
-                 <Link to="/profile">Profile</Link>
+                 <Link to="/my-profile">Profile</Link>
                 </button>
                 </li>
               }
             
-            {!this.validUser && 
+            {!this.checkInfo() && 
               <li className="item-menu-mobile">
                <button>
                  <Link to="/setting">Log On</Link>

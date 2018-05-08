@@ -1,24 +1,24 @@
 
-
+/*
 // event
 // turn to id
 // ipfs
 // modify work time
 
 
-// // 1 new Nodejs
-// $ mkdir web3test && cd web3test
-// $ npm init
+// 1 new Nodejs
+$ mkdir web3test && cd web3test
+$ npm init
 
-// // 2.1 load web3.js
-// $ npm install web3 --save
+// 2.1 load web3.js
+$ npm install web3 --save
 
-// // 2.2 load ipfs-mini
-// $ npm install --save ipfs-mini
+// 2.2 load ipfs-mini
+$ npm install --save ipfs-mini*/
 
 // 3.1 new and connect web3
 const Web3 = require("web3");
-let web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+let web3 = new Web3(Web3.givenProvider || "http://127.0.0.1:7545");
 // var web3 = new Web3();
 // web3.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
 
@@ -47,7 +47,7 @@ let account_three = web3.eth.accounts[2];
 //         bool available; //SendToWork
 //         uint masterID;
 //         uint Value; 
-// 		string ipfshash;
+// 		   string ipfshash;
 //     }
 function add_newUser(addr,Profile_json){
 	let save_hash = saveHash(Profile_json);	
