@@ -38,7 +38,7 @@
       "introduction": "Pyrite is a mineral that is known as fool’s gold or counterfeit gold because it bears a striking resemblance to the precious metal.",
       "price": 1.29,
       "masterID": "007",
-      "slavesID": ["001","003","004","006"]
+      "slavesID": ["001","003","004","006","008"]
     }, {
       "id": "006",
       "address": "0xabdc05cf063c9ea397e6951e36c686aaa5425019",
@@ -61,7 +61,7 @@
       "name": "DaiNa",
       "introduction": "Pyrite is a mineral that is known as fool’s gold or counterfeit gold because it bears a striking resemblance to the precious metal.",
       "price": 6.80,
-      "masterID": "009",
+      "masterID": "005",
       "slavesID": ["007","010"]
     }, {
       "id": "009",

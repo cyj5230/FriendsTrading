@@ -9,7 +9,8 @@ import Setting from './components/Setting';
 import user_test_json from './me.json';
 import all_users_test_json from './test.json';
 import Web3 from 'web3';
-// import W3function from './W3function.js';
+import W3function from './W3function';
+// var W3function = require("./W3function");
 
 class App extends Component {
   
@@ -19,19 +20,23 @@ class App extends Component {
     this.handleRanking = this.handleRanking.bind(this);
     this.handleSorting = this.handleSorting.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
+    this.handleBuy = this.handleBuy.bind(this);
+    this.handleReward = this.handleReward.bind(this);
+
+
     //let me = W3function.get_user(addr);
     //if(!me){
       //const me_temp = {"address": {String(addr)}};
       //me = JSON.parse(me_temp);
       //}
       //-------------------------------
-      //let marketSlaves = W3function.get_allUsers();
     this.state={
-      user:user_test_json,
+      user: user_test_json,
       allUsers:all_users_test_json,
       marketSlaves:all_users_test_json,
       focusUser:all_users_test_json[0]
     };
+    this.w3f = new W3function();
   }
 
   componentDidMount () {
@@ -47,6 +52,7 @@ class App extends Component {
 
       document.body.appendChild(script0);
       document.body.appendChild(script1);
+      this.w3f.initWeb3();
 
       if (window.web3 && window.web3.currentProvider.isMetaMask) {
         window.web3.eth.getAccounts((error, accounts) => {
@@ -56,23 +62,68 @@ class App extends Component {
       } else {
         console.log('MetaMask account not detected :(');
       }
-  }
+      let tmp = {
+        "name": "Yuki",
+        "introduction": "Pyrite is a mineral that is known as fool’s gold or counterfeit gold because it bears a striking resemblance to the precious metal.",
+      };
+      // this.w3f.getAllUsers((users) => {
+      //   console.log(users);
+      //   this.setState((state, props) => {
+      //     console.log(users);
+      //     return {
+      //       allUsers: users
+      //     };
+      //   })
+      // });
 
-  handleFocus(id){    
-    let focusUser = all_users_test_json[parseInt(id)-1];
+      // console.log("ALLUSERS");
+    }
+
+  handleFocus(id){ 
+    if(parseInt(id) - 1 >= this.state.allUsers.length) {
+      return '/';
+    }
+
+    let focusUser = this.state.allUsers[parseInt(id)-1];
     this.setState({focusUser:focusUser});
-    let path = (id === this.state.user['id']) ? '/my-profile' : '/profile';
+    let path = '/profile';
+    if(this.state.user !== null)
+      path = (id === this.state.user['id']) ? '/my-profile' : '/profile';
     return path;
   }
 
-  handleSetting(name, intro){
+  handleSetting(name, intro, callback){
     if(!name || !intro){
       return 'Please enter valid value';
     }
-    this.setState({
-        name:name,
-        introduction:intro,
-        id:"010"
+    // this.setState({
+    //     name:name,
+    //     introduction:intro,
+    //     id:"010"
+    // });
+    this.w3f.addUser(this.state.address, {name: name, introduction: intro}, id => {
+      console.log("ID", id);
+      this.w3f.getUser(id, this.state.address, userInfoJson => {
+        console.log(userInfoJson);
+
+        // Use the userInfoJson replace the following
+
+        let newUser = {
+          name: name,
+          address: this.state.address,
+          introduction: intro,
+          id: ("000" + parseInt(id)).substr(-3),
+          price: 0,
+          masterID: "",
+          slavesID: []
+        }
+        this.setState((state, props) => {
+          return {
+            user: newUser
+          };
+        });
+        callback(newUser);
+      });
     });
   }
 
@@ -134,16 +185,34 @@ class App extends Component {
     this.setState({marketSlaves:sorted});
   }
 
+  handleBuy(slave_addr){    
+    console.log("handleBuy");
+    // this.w3f.buyFriend(this.state.address,slave_addr);
+    // this.w3f.getAllUsers((users) => {
+      //   console.log(users);
+      //   this.setState((state, props) => {
+      //     console.log(users);
+      //     return {
+      //       allUsers: users
+      //     };
+      //   })
+      // });
+  }
+  handleReward(target_addr){
+    console.log("handleReward");
+    // this.w3f.reward(this.state.address, target_addr);
+  }
+
   render() {
     return (
       <div className="App">
         <BrowserRouter>
         <div>
         <Header 
-          name={this.state.user['name']} 
-          id={this.state.user['id']}
-          slavesID={this.state.user['slavesID']}
-          price={this.state.user['price']}
+          name={this.state.user != null ? this.state.user['name'] : ""} 
+          id={this.state.user != null ? this.state.user['id'] : ""}
+          slavesID={this.state.user != null ? this.state.user['slavesID'] : []}
+          price={this.state.user != null ? this.state.user['price'] : 0}
           allUsers={this.state.allUsers}
           handleFocus={this.handleFocus}
         />
@@ -166,25 +235,26 @@ class App extends Component {
                 <Route path='/' 
                  render={()=>
                     <Market 
-                    id={this.state.user['id']}
-                    slavesID={this.state.user['slavesID']}
-                    masterID={this.state.user['masterID']}
+                    id={this.state.user != null ? this.state.user['id'] : ""}
+                    slavesID={this.state.user != null ? this.state.user['slavesID'] : []}
+                    masterID={this.state.user != null ? this.state.user['masterID'] : ""}
                     marketSlaves={this.state.marketSlaves}
                     handleRanking={this.handleRanking}
-                    handleSorting={this.handleSorting}                    
+                    handleSorting={this.handleSorting}
                     handleFocus={this.handleFocus}
                     />}
-                  exact={true}/>              
+                  exact={true}/>
+
                 <Route path='/my-profile' 
                   render={()=>
-                    <MyProfile 
-                    isMe={true}
+                    <MyProfile
                     user={this.state.user}
-                    allUsers={this.state.allUsers}                    
+                    allUsers={this.state.allUsers}
                     handleRanking={this.handleRanking}
                     handleFocus={this.handleFocus}
                     />}
                   exact={true}/>    
+
                 <Route path='/setting' 
                   render={()=>
                     <Setting 
@@ -195,8 +265,23 @@ class App extends Component {
 
                 <Route path='/profile' 
                   render={()=>
-                    <Profile 
-                    isMe={false}
+                    <Profile
+                    canBuy={//canBuy todo: && available
+                      this.state.user !== null
+                      /*&&
+                      (//not your master
+                      (this.state.focusUser['id']!==this.state.user['masterID'] 
+                      //not in your slave list
+                      && !this.state.user['slavesID'].includes(this.state.focusUser['id']))
+                      || 
+                      (this.props.to.state 
+                      && this.props.to.state.focusUser['id']!==this.state.user['masterID']
+                      && !this.state.user['slavesID'].includes(this.props.to.state.focusUser['id']))
+                      )*/}
+                    canReward={this.state.user !== null}
+                    handleBuy={this.handleBuy}
+                    handleReward={this.handleReward}
+
                     user={this.state.focusUser || (this.props.to.state && this.props.to.state.focusUser)}
                     allUsers={this.state.allUsers}                    
                     handleRanking={this.handleRanking}                    
@@ -238,7 +323,7 @@ class MyProfile extends Component{
       <div className="row">            
         <Leftbar handleRanking={this.props.handleRanking}/>
         <ProfileDisplay 
-          isMe={this.props.isMe}
+          isMe={true}
           id={this.props.user['id']}
           name={this.props.user['name']} 
           address={this.props.user['address']}
@@ -260,7 +345,11 @@ class Profile extends Component{
       <div className="row">            
         <Leftbar handleRanking={this.props.handleRanking}/>
         <ProfileDisplay 
-          isMe={this.props.isMe}
+          isMe={false}
+          canBuy={this.props.canBuy}
+          canReward={this.props.canReward}
+          handleBuy={this.props.handleBuy}
+          handleReward={this.props.handleReward}
           id={this.props.user['id']}
           name={this.props.user['name']} 
           address={this.props.user['address']}

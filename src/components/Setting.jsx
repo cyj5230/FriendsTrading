@@ -13,6 +13,7 @@ export default class Setting extends Component{
 		};
   }
   componentDidMount () {
+  	console.log(this.props.address);
   	document.querySelector('.user-avatar').src = new Pictogrify(this.props.address, 'monsters').base64;
   }
 
@@ -21,20 +22,24 @@ export default class Setting extends Component{
 
 	const name = e.target.elements.name.value.trim();
 	const introduction = e.target.elements.introduction.value.trim();
-	const error = this.props.handleSetting(name, introduction);
-
-	this.setState(() => {
-		return{ error };
-	});
-
-	if(error === undefined || error === null){
-		this.setState(() => {
-			return{redirect:true};
-		});
-	}
+	// const error = ;
 
 	e.target.elements.name.value = '';
-	e.target.elements.introduction.value = '';
+	e.target.elements.introduction.value = '';	
+
+	this.props.handleSetting(name, introduction, (user, error) => {
+		// If error
+		// this.setState(() => {
+		// 	return{ error };
+		// });
+
+		if(error === undefined || error === null){
+			this.setState(() => {
+				return{redirect:true};
+			});
+			console.log("Success");
+		}
+	})
   }
 
   render(){

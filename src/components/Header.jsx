@@ -10,7 +10,7 @@ export default class Header extends Component{
   }
 
   checkInfo(){
-    if(this.props.id !== "")
+    if(this.props.id != undefined && this.props.id !== "")
       return true;
     else
       return false;

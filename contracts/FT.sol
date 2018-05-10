@@ -1,4 +1,4 @@
-pragma solidity ^0.4.22;
+pragma solidity ^0.4.21;
 contract FT {
     
     //event NewCharacter(address addr,uint balance,bool available,uint masterID,uint value);
@@ -17,7 +17,7 @@ contract FT {
         string ipfshash;
     }
     
-    uint userID = 10000000;
+    uint userID = 1;
     mapping(uint => User) public users;
     mapping(address => uint) public addrs;
     

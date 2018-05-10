@@ -49,8 +49,8 @@ export default class MarketDisplay extends Component{
         {/*<!--  -->*/}
         <div className="flex-sb-m flex-w p-b-35">
           <div className="flex-w">
-            <div className="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-              <select value={this.state.value} onChange={this.handleChange} className="selection-2" name="sorting">
+            <div className="rs2-select2 bo4 of-hidden w-size12 m-b-5 m-r-10">
+              <select value={this.state.value} onChange={this.handleChange} className="selection-2 size6" name="sorting">
                 <option value='default'>Default Sorting</option>
                 <option value='price+'>Price: low to high</option>
                 <option value='price-'>Price: high to low</option>

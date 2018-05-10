@@ -2397,3 +2397,8 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 
+.selection-2 {
+  color: #666666;
+  border: none;
+  padding: 0 16px;
+}

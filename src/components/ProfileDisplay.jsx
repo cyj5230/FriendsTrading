@@ -29,6 +29,8 @@ export default class ProfileDisplay extends Component{
 	         }
       	}
   	}
+
+
   	render(){
 	    return(
 	    <div className="col-sm-6 col-md-8 col-lg-9 p-b-30">
@@ -69,6 +71,19 @@ export default class ProfileDisplay extends Component{
 						<p className="p-b-28">
 							{this.props.introduction}
 						</p>
+						<div className="w-size2 p-t-20">
+							{!this.props.isMe && this.props.canBuy &&
+								<button onClick={this.props.handleBuy(this.props.address)} className="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4 m-b-20">
+									Buy
+								</button>
+							}
+							{!this.props.isMe && this.props.canReward &&
+								<button onClick={this.props.handleReward(this.props.address)} className="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
+									Reward
+								</button>
+							}
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -94,6 +109,9 @@ export default class ProfileDisplay extends Component{
 
 				</div>
 			</section>
+			<script type="text/javascript">
+				
+			</script>
 		</div>
 	    );
   }
